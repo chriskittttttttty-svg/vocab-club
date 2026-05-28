@@ -49,6 +49,8 @@ export default function App() {
   const [reviewWords, setReviewWords] =
     useState("");
 
+  const [reading, setReading] = useState("");
+
   // Firebase 实时同步
 
   useEffect(() => {
@@ -80,10 +82,14 @@ export default function App() {
       setNewWords(currentData.newWords);
 
       setReviewWords(currentData.review);
+
+      setReading(currentData.reading ?? "");
     } else {
       setNewWords("");
 
       setReviewWords("");
+
+      setReading("");
     }
   }, [selectedDate, selectedUser, records]);
 
@@ -106,6 +112,8 @@ export default function App() {
           newWords: Number(newWords),
 
           review: Number(reviewWords),
+
+          reading: Number(reading) || 0,
         },
       },
     };
@@ -126,6 +134,8 @@ export default function App() {
         newWords: 0,
 
         review: 0,
+
+        reading: 0,
       };
     }
 
@@ -141,8 +151,9 @@ export default function App() {
 
     return (
       bData.newWords +
-      bData.review -
-      (aData.newWords + aData.review)
+      bData.review +
+      bData.reading -
+      (aData.newWords + aData.review + aData.reading)
     );
   });
 
@@ -259,6 +270,16 @@ export default function App() {
             className="w-full bg-black/30 border border-white/10 rounded-2xl p-4"
           />
 
+          <input
+            type="number"
+            placeholder="今天读了几篇阅读"
+            value={reading}
+            onChange={(e) =>
+              setReading(e.target.value)
+            }
+            className="w-full bg-black/30 border border-white/10 rounded-2xl p-4"
+          />
+
           <button
             onClick={handleSubmit}
             className="w-full bg-gradient-to-r from-emerald-400 to-cyan-400 text-black rounded-2xl p-4 font-black text-lg hover:scale-[1.02] transition-all duration-300"
@@ -310,7 +331,7 @@ export default function App() {
                       </p>
 
                       <p className="text-zinc-500 text-sm mt-1">
-                        📘 {data.newWords} 新词 · 🔁 {data.review} 复习
+                        📘 {data.newWords} 新词 · 🔁 {data.review} 复习 · 📖 {data.reading ?? 0} 阅读
                       </p>
 
                     </div>
@@ -320,7 +341,7 @@ export default function App() {
                   <div className="text-right">
 
                     <p className="text-3xl font-black">
-                      {data.newWords + data.review}
+                      {data.newWords + data.review + (data.reading ?? 0)}
                     </p>
 
                     <p className="text-zinc-500 text-sm">
