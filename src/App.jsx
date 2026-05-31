@@ -272,7 +272,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-black via-zinc-950 to-zinc-900 text-white">
 
       {/* Tab 导航栏 */}
-      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-xl border-b border-white/10">
+      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-xl border-b border-white/10" style={{paddingTop: 'env(safe-area-inset-top)'}}>
         <div className="max-w-md mx-auto flex">
           {[["study", "📚 学习"], ["pet", "🐱 小猫"]].map(([t, label]) => (
             <button
